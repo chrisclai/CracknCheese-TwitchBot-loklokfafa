@@ -1,0 +1,6 @@
+# Ignoring data files/folders, including _pycache_, accounts, and sounds
+__pycache__
+accounts
+sounds
+privinfo.py
+twitchbot.code-workspace
