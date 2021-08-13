@@ -5,11 +5,11 @@ def checkrank(self, c, e, xp):
     if xp >= 0 and xp < 50:
         rank = "Starter"
         toplvl = 50
-    elif xp >= 100 and xp < 150:
+    elif xp >= 50 and xp < 150:
         rank = "Experienced"
         toplvl = 150
     elif xp >= 150 and xp < 300:
-        rank = "Limestone"
+        rank = "Grass"
         toplvl = 300
     elif xp >= 300 and xp < 500:
         rank = "Iron"
@@ -36,7 +36,7 @@ def checkrank(self, c, e, xp):
         rank = "Diamond"
         toplvl = 50000
     elif xp >= 50000 and xp < 100000:
-        rank = "Obsidian"
+        rank = "Challenger"
         toplvl = 100000
     elif xp >= 100000:
         rank = "Immortal"

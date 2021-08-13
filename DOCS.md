@@ -2,6 +2,14 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 12th, 2021 (Day 5)
+- Created a new file called tkleaderboard to display a leaderboard in real time on stream such that chatters can see xp rise
+- Spammers in chat stress tested the bot, bot did not fail (which is a good thing)
+- Few chatters reached Grass -> Iron rank in the span of 50 minutes
+- Added the requisite emojis into the window, will improve on design at another time
+
+---
+
 ### August 11th, 2021 (Day 4)
 - Documentation of progress made from previous streams (day by day)
 - Created **README.md**, **LICENCE** and **DOCS.md** files for publication

@@ -9,6 +9,7 @@ from pygame import mixer
 from update_json import *
 from checkrank import *
 from info import *
+from tkleaderboard import *
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
     # GLOBAL VARIABLES
