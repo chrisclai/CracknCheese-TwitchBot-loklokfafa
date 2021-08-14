@@ -2,6 +2,16 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 13, 2021 (Day 6)
+- Added a key into the accounts.json dictionary file called "lastjoin" that contains the last date that a chatter runs the command !daily
+- Added a command called !daily that proves the chatter with a random amount of points between 50-100 (one bong guarenteed)
+- Constrained the usage of !daily to once a day using the **datetime** module (Find today, put in dictionary, use to compare values)
+- Completed implementation of a basic leaderboard system using the module **tkleaderboard** to create a seperate screen that live updates the value of xp that one gains
+- Updated SLOBS (stream lab obs) in order to specifically display that screen on opening
+- Integrated file into main **crackncheese.py** script so that the tk window can open upon starting script
+
+---
+
 ### August 12th, 2021 (Day 5)
 - Created a new file called tkleaderboard to display a leaderboard in real time on stream such that chatters can see xp rise
 - Spammers in chat stress tested the bot, bot did not fail (which is a good thing)

@@ -2,6 +2,7 @@ import irc.bot
 import requests
 import random
 import time
+from datetime import datetime
 import privinfo
 from _thread import *
 import threading
@@ -9,6 +10,7 @@ from pygame import mixer
 from update_json import *
 from checkrank import *
 from info import *
+from sortleaderboard import *
 from tkleaderboard import *
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
@@ -51,6 +53,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         thread_automsg = threading.Thread(target = auto_msg, args = (self, c))
         thread_automsg.start()
 
+        thread_leaderboard = threading.Thread(target = tkleaderboard)
+        thread_leaderboard.start()
+
         # You must request specific capabilities before you can use them
         c.cap('REQ', ':twitch.tv/membership')
         c.cap('REQ', ':twitch.tv/tags')
@@ -84,7 +89,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             if accounts[str(x)]['username'] == awardee:
                 accounts[str(x)]['points'] += 1
                 accounts[str(x)]['xp'] += 1
-                rank, _ = checkrank(self, c, e, accounts[str(x)]['xp'])
+                rank, _ = checkrank(accounts[str(x)]['xp'])
                 accounts[str(x)]['rank'] = rank
                 update_json('accounts/accounts.json',accounts)
                 exist = True
@@ -110,6 +115,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 accounts[str(location)]['points'] -= 50
                 update_json('accounts/accounts.json', accounts)
                 mixer.music.load('sounds/bong.mp3')
+                c.privmsg(self.channel, f"Hey {e.source.nick}, you ran the command !playsound bong, which costs 50 points. You now have {accounts[str(location)]['points']} points remaining!")
             else:
                 c.privmsg(self.channel, "Sorry, that sound doesn't exist (yet)! Please use !checkcooldown to view the current status of the cooldown.")
             mixer.music.play()
@@ -181,6 +187,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 tempdict['username'] = e.source.nick
                 tempdict['points'] = 0
                 tempdict['xp'] = 0
+                tempdict['rank'] = ""
+                tempdict['lastjoined'] = ""
                 accounts[str(accountlen)] = tempdict
                 update_json("accounts/accounts.json",accounts)
                 c.privmsg(self.channel, f"Thank you for creating a loklokfafa account, {e.source.nick}! Enjoy the stream!")
@@ -200,25 +208,35 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         # Display Leaderboard
         elif cmd == "leaderboard":
             accounts = refresh_json(accounts)
-            listnames = []
-            listpoints = []
-            for x in range (len(accounts)):
-                listnames.append(accounts[str(x)]['username'])
-                listpoints.append(accounts[str(x)]['xp'])
-            for i in range(len(accounts)):
-                for j in range(0, len(accounts) - i - 1):
-                    if listpoints[j] < listpoints[j + 1]:
-                        tempvar = listpoints[j]
-                        listpoints[j] = listpoints[j + 1]
-                        listpoints[j + 1] = tempvar
-                        tempvar = listnames[j]
-                        listnames[j] = listnames[j + 1]
-                        listnames[j + 1] = tempvar
+            listnames, listxp = sortbyhigh(accounts)
             output = "XP Leaderboard"
             emojis = ["🏆", "🥇", "🥈", "🥉", "🏅", "🎖️", "🎖", "🔲"]
             for x in range(0, 8):
-                output += f" || {emojis[x]}: [{listnames[x]}, {listpoints[x]} xp]"
+                output += f" || {emojis[x]}: [{listnames[x]}, {listxp[x]} xp]"
             c.privmsg(self.channel, output)
+
+        # Daily Reward
+        elif cmd == "daily":
+            exist = False
+            location = 0
+            accounts = refresh_json(accounts)
+            for x in range (len(accounts)):
+                if e.source.nick == accounts[str(x)]['username']:
+                    exist = True
+                    location = x
+                    break
+            if exist:
+                now = datetime.now()
+                pointamount = random.randrange(50, 100, 1)
+                if now.strftime('%m/%d/%Y') != accounts[str(x)]['lastjoined']:
+                    accounts[str(x)]['lastjoined'] = now.strftime('%m/%d/%Y')
+                    accounts[str(x)]['points'] += pointamount
+                    c.privmsg(self.channel, f"Thank you for tuning in today. Here is your daily reward! [+{pointamount} points]")
+                else:
+                    c.privmsg(self.channel, "Sorry, your daily reward was already collected. Come back tomorrow for another go!")
+            else:
+                c.privmsg(self.channel, "Sorry, you do not have an account yet. Please use !account to create an account.")
+            update_json("accounts/accounts.json", accounts)
 
         # Displays Ranks
         elif cmd == "rankinfo":

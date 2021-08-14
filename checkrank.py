@@ -1,4 +1,4 @@
-def checkrank(self, c, e, xp):
+def checkrank(xp):
     rank = ""
     toplvl = 0
     

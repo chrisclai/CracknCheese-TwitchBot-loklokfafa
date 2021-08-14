@@ -7,5 +7,10 @@ def update_json(directory, dictionary):
 
 def refresh_json(accounts):
     with open('accounts/accounts.json') as read_file:
-                accounts = json.load(read_file)
-                return accounts
+            accounts = json.load(read_file)
+            return accounts
+
+def new_json():
+    with open('accounts/accounts.json') as read_file:
+            accounts = json.load(read_file)
+            return accounts
