@@ -197,7 +197,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             else:
                 points = accounts[str(location)]['points']
                 xp = accounts[str(location)]['xp']
-                rank, difference = checkrank(self, c, e, xp)
+                rank, difference = checkrank(xp)
                 message = f"Welcome back {e.source.nick}, you are currently in the [{rank}] rank! You have [{xp}] xp and a balance of [{points}] points. {difference} more xp to go until the next rank! Thanks for participating!"
                 c.privmsg(self.channel, message)
 

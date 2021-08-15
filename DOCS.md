@@ -2,7 +2,13 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
-### August 13, 2021 (Day 6)
+### August 14th, 2021 (Day 7)
+- Added a new file called **groupreward.py** in which the twitch chat's cumulative effort will go into a group reward
+- Created a tkinter window and drew a line, imported images, designed title in preparation for tomorrow in which we will make the rocketship move
+
+---
+
+### August 13th, 2021 (Day 6)
 - Added a key into the accounts.json dictionary file called "lastjoin" that contains the last date that a chatter runs the command !daily
 - Added a command called !daily that proves the chatter with a random amount of points between 50-100 (one bong guarenteed)
 - Constrained the usage of !daily to once a day using the **datetime** module (Find today, put in dictionary, use to compare values)
