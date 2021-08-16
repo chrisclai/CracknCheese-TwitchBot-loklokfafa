@@ -6,12 +6,14 @@ from datetime import datetime
 import privinfo
 from _thread import *
 import threading
+import tkinter as tk
 from pygame import mixer
 from update_json import *
 from checkrank import *
 from info import *
 from sortleaderboard import *
 from tkleaderboard import *
+from groupreward import *
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
     # GLOBAL VARIABLES
@@ -63,6 +65,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         c.join(self.channel)
 
     def on_pubmsg(self, c, e):
+        # Update the Bong Bell (iterate by 1) when a message is sent by anyone
+        msgup()
 
         # If a chat message starts with an exclamation point, try to run it as a command
         if e.arguments[0][:1] == '!' and e.arguments[0][:10] != '!playsound':
@@ -256,6 +260,9 @@ def main():
     client_id = privinfo.client_id
     token     = privinfo.token
     channel   = "loklokfafa"
+
+    thread_groupreward = threading.Thread(target = groupreward)
+    thread_groupreward.start()
 
     bot = TwitchBot(username, client_id, token, channel)
     bot.start()

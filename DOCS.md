@@ -2,6 +2,19 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 16th, 2021 (Day 9)
+[Plan: Create a system in which the script will provide points to all chatters using https://tmi.twitch.tv/group/user/:channel_name/chatters API through requests when the bong bell rings]
+
+---
+
+### August 15th, 2021 (Day 8)
+- Added a label that tracks the percentage of goal reached
+- Used the recursive update function inside tk function in order to track group progress over time based on messages sent from on_pubmsg() from main script
+- Came up with increment function that calculates the relative x position based on % of messages sent
+- Developed a reward system that provides bong noises once the ship reaches the bell and rings it 5 times over a period of 15 seconds
+
+---
+
 ### August 14th, 2021 (Day 7)
 - Added a new file called **groupreward.py** in which the twitch chat's cumulative effort will go into a group reward
 - Created a tkinter window and drew a line, imported images, designed title in preparation for tomorrow in which we will make the rocketship move
