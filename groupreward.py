@@ -1,9 +1,15 @@
 import tkinter as tk
 import time
 from pygame import mixer
+from _thread import *
+import threading
+from requestreward import *
 
 global messages
 messages = 0
+
+global trackactivate
+trackactivate = False
 
 def msgup():
     global messages
@@ -12,6 +18,9 @@ def msgup():
 def groupreward():
     # Global Variables
     global messages
+
+    # msg threshold
+    threshold = 250
 
     # Local Variables
     HEIGHT = 250
@@ -52,29 +61,42 @@ def groupreward():
     rocket_percent = tk.Label(main_canv, text="0.00%", font=("garamond", 18, 'bold'), justify='center', bg=BGCOLOR, fg='yellow')
     rocket_percent.place(relx=0.05,rely=0.8,anchor='center')
 
-    bell_label = tk.Label(main_canv, text="250 xp", font=("garamond", 18, 'bold'), justify='center', bg=BGCOLOR, fg='white')
+    bell_label = tk.Label(main_canv, text=f"{threshold} xp", font=("garamond", 18, 'bold'), justify='center', bg=BGCOLOR, fg='white')
     bell_label.place(relx=0.95,rely=0.3,anchor='center')
 
     def findPos(msg):
         # Find location of ship relative to x axis
-        increment = (0.95 - 0.05)/250
+        increment = (0.95 - 0.05)/threshold
         return 0.05 + increment * msg
 
-    def updateData():
-        # If messages reach goal 250 proc reward
+    def procreward():
         global messages
-        if messages == 250:
+        global trackactivate
+        distribute_rewards()
+        mixer.init()
+        mixer.music.load('sounds/bong.mp3')
+        for x in range(0,5):
+            mixer.music.play()
+            time.sleep(3)
+        messages = 0
+        trackactivate = False
+
+    def updateData():
+        # If messages reach goal msg proc reward
+        global messages
+        global trackactivate
+        if messages == threshold and not trackactivate:
             rocket_label['fg'] = 'green'
-            mixer.init()
-            mixer.music.load('sounds/bong.mp3')
-            for x in range(0,5):
-                mixer.music.play()
-                time.sleep(3)
-            messages = 0
+            trackactivate = True
+            thread_reward = threading.Thread(target = procreward)
+            thread_reward.start()
+
+        if not trackactivate:
+            rocket_label['fg'] = 'white'
 
         # Check the value of messages every 1 second and update label
         rocket_label['text'] = f"{messages} xp"
-        rocket_percent['text'] = f"{round(messages/250.0 * 100, 2)}%"
+        rocket_percent['text'] = f"{round(messages/(threshold * 1.0) * 100, 2)}%"
 
         # Placing the rocket depending on its relative position given % to goal
         xpos = findPos(messages)

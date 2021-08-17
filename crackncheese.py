@@ -14,6 +14,7 @@ from info import *
 from sortleaderboard import *
 from tkleaderboard import *
 from groupreward import *
+from requestreward import checkreward
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
     # GLOBAL VARIABLES
@@ -52,11 +53,23 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 except KeyboardInterrupt:
                     break
 
+        def check_bell(self, c):
+            while True:
+                time.sleep(1)
+                message = checkreward()
+                if message:
+                    c.privmsg(self.channel, message)
+                else:
+                    pass
+                
         thread_automsg = threading.Thread(target = auto_msg, args = (self, c))
         thread_automsg.start()
 
         thread_leaderboard = threading.Thread(target = tkleaderboard)
         thread_leaderboard.start()
+
+        thread_checkbell = threading.Thread(target = check_bell, args = (self, c))
+        thread_checkbell.start()
 
         # You must request specific capabilities before you can use them
         c.cap('REQ', ':twitch.tv/membership')

@@ -3,7 +3,19 @@
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
 ### August 16th, 2021 (Day 9)
-[Plan: Create a system in which the script will provide points to all chatters using https://tmi.twitch.tv/group/user/:channel_name/chatters API through requests when the bong bell rings]
+- Created a variable called threshold that is linked to all systems that control position and maximum total for the progress bar. Max messages linked
+- Created a thread for the completion of the progress bar as to not interfere with the rest of the recursive **updatedata** function
+- Create a global toggle variable called trackactivate to track the state of the global variable messages throughout the threaded function
+- Changed colors such that green = complete, and ship will restart after the bongs have been completed
+- Implemented a rewards system using Twitch API to give all current viewers that are inside of the accounts.json file 50 free points once the bell has rung
+    * Take entire info file from API using **requests** library
+    * Extract all moderators and current viewers (including the bots)
+    * Put all viewers into a list
+    * Filter the true viewers from regular viewers using O(n^2) algorithm comparison checker
+    * Provide points to only the true viewers and update the accounts.json file
+    * Create global variable called message and use a toggling system to feed the message that needs to be sent back into chat through the main .py file
+    * In the main file, create a thread with an infinite loop segmented by time.sleep(1) that will check the function inside **requestreward.py** for any new messages
+- Current threshold = 250 messages (xp) and current reward is 50 points (pts)
 
 ---
 
