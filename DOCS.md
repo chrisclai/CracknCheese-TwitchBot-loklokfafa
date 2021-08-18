@@ -2,6 +2,12 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 17th, 2021 (Day 10)
+- Documented all file paths and dependency requirements inside **Systems.drawio** as a flowchart
+- Began simple skeleton code system for designing a game that can be played by twitch chat (word charade)
+
+---
+
 ### August 16th, 2021 (Day 9)
 - Created a variable called threshold that is linked to all systems that control position and maximum total for the progress bar. Max messages linked
 - Created a thread for the completion of the progress bar as to not interfere with the rest of the recursive **updatedata** function

@@ -1,5 +1,7 @@
 from sortleaderboard import sortbyhigh
 import tkinter as tk
+
+# Individual File Dependencies
 from update_json import *
 from checkrank import *
 

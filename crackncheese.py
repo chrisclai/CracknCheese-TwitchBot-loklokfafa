@@ -8,6 +8,8 @@ from _thread import *
 import threading
 import tkinter as tk
 from pygame import mixer
+
+# Individual File Dependencies
 from update_json import *
 from checkrank import *
 from info import *
@@ -24,6 +26,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     
     global accountlen
     accountlen = len(accounts)
+
+    global wordactive
+    wordactive = False
 
     def __init__(self, username, client_id, token, channel):
         self.client_id = client_id
@@ -94,6 +99,12 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             except:
                 c.privmsg(self.channel, "What would you like me to play?")
 
+        if e.arguments[0][:12] == '!wordcharade':
+            try:
+                guess = e.arguments[0].split(' ')[1]
+            except:
+                pass
+
         # Award points to the chatter for interaction (also awards xp)
         global accounts
         global accountlen
@@ -144,6 +155,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         global accounts
         global accountlen
+        global wordactive
 
         # Poll the API to get current game.
         if cmd == "game":
@@ -258,6 +270,14 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         # Displays Ranks
         elif cmd == "rankinfo":
             c.privmsg(self.channel, ranks())
+
+        # Wordcharade Game
+        elif cmd == "wordcharade":
+            if not wordactive:
+                wordactive = True
+                print("Word Charade Started, searching for word now!")
+            else:
+                print("Word Charade has already started!")
 
         # If empty command is recieved
         elif not cmd:

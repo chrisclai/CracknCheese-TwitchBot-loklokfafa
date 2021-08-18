@@ -3,6 +3,8 @@ import time
 from pygame import mixer
 from _thread import *
 import threading
+
+# Individual File Dependencies
 from requestreward import *
 
 global messages
@@ -85,7 +87,7 @@ def groupreward():
         # If messages reach goal msg proc reward
         global messages
         global trackactivate
-        if messages == threshold and not trackactivate:
+        if messages >= threshold and not trackactivate:
             rocket_label['fg'] = 'green'
             trackactivate = True
             thread_reward = threading.Thread(target = procreward)
