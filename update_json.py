@@ -15,6 +15,6 @@ def new_json():
             accounts = json.load(read_file)
             return accounts
 
-def word_charade():
+def word_charade_get():
     with open('wordcharade.json') as read_file:
             return json.load(read_file)

@@ -2,6 +2,17 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 18th, 2021 (Day 11)
+- Completed implementation of word charade game, including doing clues for words
+    * Added a point system, points are based on difficulty of word and gradually decrease as more hints are revealed
+    * Provides xp upon the singular person guessing
+    * Group effort to reveal more hints (global variable to keep track of number of guesses)
+- Completed field testing of bot and fixed bugs. Functioned properly with minimal issues (minor typos/bugs)
+- Connected variables through global references from on_pubmsg() to do_command()
+- Allowed chat to begin guessing the word "calculus" utilizing contents of **wordcharade.json** 
+
+---
+
 ### August 17th, 2021 (Day 10)
 - Documented all file paths and dependency requirements inside **Systems.drawio** as a flowchart
 - Began simple skeleton code system for designing a game that can be played by twitch chat (word charade)

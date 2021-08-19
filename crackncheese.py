@@ -1,3 +1,4 @@
+from hashlib import new
 import irc.bot
 import requests
 import random
@@ -23,12 +24,16 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     global accounts
     accounts = {}
     accounts = refresh_json(accounts)
-    
-    global accountlen
-    accountlen = len(accounts)
 
+    # For wordcharade game only!
     global wordactive
     wordactive = False
+
+    global currentwordlocation
+    currentwordlocation = ""
+
+    global numguesses
+    numguesses = 0
 
     def __init__(self, username, client_id, token, channel):
         self.client_id = client_id
@@ -99,15 +104,59 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             except:
                 c.privmsg(self.channel, "What would you like me to play?")
 
+        # Word charade game
+        global wordactive
+        global currentwordlocation
+        global numguesses
+        global accounts
         if e.arguments[0][:12] == '!wordcharade':
             try:
                 guess = e.arguments[0].split(' ')[1]
+                if wordactive:
+                    words = word_charade_get()
+                    if guess.lower() != words[str(currentwordlocation)]['word']:
+                        numguesses += 1
+                        if numguesses >= 100:
+                            correctword = words[str(currentwordlocation)]['word']
+                            c.privmsg(self.channel, f"[Word Charade] Unfortunately, no one has gotten the word correct in 100 messages. The correct word was {correctword}. Thanks for playing, see you next time!")
+                        else:
+                            c.privmsg(self.channel, f"[Word Charade] Unfortunately, that guess is incorrect. You are currently at {numguesses} guesses. Try Again!")
+                    else:
+                        reward = words[str(currentwordlocation)]['reward']
+                        if numguesses >= 0 and numguesses < 15:
+                            reward *= 1
+                        elif numguesses >= 15 and numguesses < 30:
+                            reward *= 0.8
+                        elif numguesses >= 30 and numguesses < 50:
+                            reward *= 0.6
+                        elif numguesses >= 50:
+                            reward *= 0.4
+                        c.privmsg(self.channel, f"[Word Charade] Congrats! That is the correct answer! You have been awarded {int(reward)} xp!")
+                        accounts = new_json()
+                        for x in range (len(accounts)):
+                            if accounts[str(x)]['username'] == e.source.nick:
+                                accounts[str(x)]['xp'] += int(reward)
+                                break
+                        update_json('accounts/accounts.json', accounts)
+                        wordactive = False
+                else:
+                    c.privmsg(self.channel, "Game has not started yet! Please use !wordcharade to play the game!")
             except:
-                pass
+                words = word_charade_get()
+                hint0 = words[str(currentwordlocation)]["hint0"]
+                hint1 = words[str(currentwordlocation)]["hint1"]
+                hint2 = words[str(currentwordlocation)]["hint2"]
+                hint3 = words[str(currentwordlocation)]["hint3"]
+                if numguesses >= 0 and numguesses < 15:
+                    c.privmsg(self.channel, f"[Word Charade] The first hint is: [{hint0}]. Keep guessing to unlock more hints!")
+                elif numguesses >= 15 and numguesses < 30:
+                    c.privmsg(self.channel, f"[Word Charade] The second hint is: [{hint1}]. Keep guessing to unlock more hints!")
+                elif numguesses >= 30 and numguesses < 50:
+                    c.privmsg(self.channel, f"[Word Charade] The third hint is: [{hint2}]. Keep guessing to unlock more hints!")
+                elif numguesses >= 50:
+                    c.privmsg(self.channel, f"[Word Charade] The final hint is: [{hint3}]. Keep guessing to unlock more hints!")
 
         # Award points to the chatter for interaction (also awards xp)
-        global accounts
-        global accountlen
         print(f"System has given {e.source.nick} 1 point and 1 xp!")
         accounts = refresh_json(accounts)
         accountlen = len(accounts)
@@ -154,8 +203,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         c = self.connection
 
         global accounts
-        global accountlen
         global wordactive
+        global currentwordlocation
+        global numguesses
 
         # Poll the API to get current game.
         if cmd == "game":
@@ -275,10 +325,17 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         elif cmd == "wordcharade":
             if not wordactive:
                 wordactive = True
-                print("Word Charade Started, searching for word now!")
+                c.privmsg(self.channel, "Word Charade Started, searching for word now!")
+                words = word_charade_get()
+                numguesses = 0
+                currentwordlocation = random.randrange(0,len(words))
+                randword = words[str(currentwordlocation)]["word"]
+                time.sleep(3)
+                c.privmsg(self.channel, f"Word Found! Start Guessing!")
+                print(self.channel, f"Word Found! The word is {randword}")
             else:
-                print("Word Charade has already started!")
-
+               pass
+                
         # If empty command is recieved
         elif not cmd:
             message = "no."
