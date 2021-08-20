@@ -1,4 +1,5 @@
 from hashlib import new
+from logging import exception
 import irc.bot
 import requests
 import random
@@ -336,6 +337,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             else:
                pass
                 
+        elif cmd == "wordcharadehelp":
+            c.privmsg(self.channel, wordcharadehelp())
+        
         # If empty command is recieved
         elif not cmd:
             message = "no."

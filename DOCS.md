@@ -2,6 +2,14 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 19th, 2021 (Day 12)
+- Added more words to the wordcharade dictionary to provide more options in the chat (6)
+- Successfully proved functionality of game (success/reset mechanic)
+- Made a help menu to allow new people to see instructions for the game
+    * Twtich chat has a byte limit of 512 for messages sent
+
+---
+
 ### August 18th, 2021 (Day 11)
 - Completed implementation of word charade game, including doing clues for words
     * Added a point system, points are based on difficulty of word and gradually decrease as more hints are revealed
