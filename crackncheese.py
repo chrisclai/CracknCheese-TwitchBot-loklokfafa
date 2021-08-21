@@ -19,6 +19,7 @@ from sortleaderboard import *
 from tkleaderboard import *
 from groupreward import *
 from requestreward import checkreward
+from duelist import *
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
     # GLOBAL VARIABLES
@@ -35,6 +36,13 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
     global numguesses
     numguesses = 0
+
+    # For Duelist game only!
+    global firstplayerenter
+    firstplayerenter = False
+
+    global secondplayerenter
+    secondplayerenter = False
 
     def __init__(self, username, client_id, token, channel):
         self.client_id = client_id
@@ -113,7 +121,9 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         if e.arguments[0][:12] == '!wordcharade':
             try:
                 guess = e.arguments[0].split(' ')[1]
-                if wordactive:
+                if guess == 'help':
+                    c.privmsg(self.channel, wordcharadehelp())
+                elif wordactive:
                     words = word_charade_get()
                     if guess.lower() != words[str(currentwordlocation)]['word']:
                         numguesses += 1
@@ -203,10 +213,17 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     def do_command(self, e, cmd):
         c = self.connection
 
+        # Just for accounts
         global accounts
+
+        # Just for wordcharade game
         global wordactive
         global currentwordlocation
         global numguesses
+
+        # Just for 
+        global firstplayerenter
+        global secondplayerenter
 
         # Poll the API to get current game.
         if cmd == "game":
@@ -336,10 +353,16 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 print(self.channel, f"Word Found! The word is {randword}")
             else:
                pass
-                
-        elif cmd == "wordcharadehelp":
-            c.privmsg(self.channel, wordcharadehelp())
-        
+
+        elif cmd == "duelist":
+            
+            
+            player1 = Duelist(e.source.nick)
+            player2 = Duelist(e.source.nick)
+
+        elif cmd == "accept":
+            pass
+
         # If empty command is recieved
         elif not cmd:
             message = "no."
