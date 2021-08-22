@@ -2,11 +2,27 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 21th, 2021 (Day 14)
+- Continued develeopment on the Duelist Gamemode
+    * Defined definitions and constructed game process from the flowchart up to !accept
+    * Commands such as !duelist and !accept function properly (but not tested yet)
+- For tomorrow, move global variables such as firstplayerenter and secondplayerenter into Class as to not clog up file with too many global variables (Things can be referenced from the temp. account itself inside of class)
+
+---
+
+### August 20th, 2021 (Day 13)
+- Brainstormed a new interactive game for Twitch chat that requires two people in order to start
+- Created a flowchart to represent the process (Please reference **DuelistRules.drawio**)
+- First raid! Thanks to Hyphen_Nate and FischFood_ for the follow!
+- Created a class in order to intialize the temporary account system for each "duelist" member
+
+---
+
 ### August 19th, 2021 (Day 12)
 - Added more words to the wordcharade dictionary to provide more options in the chat (6)
 - Successfully proved functionality of game (success/reset mechanic)
 - Made a help menu to allow new people to see instructions for the game
-    * Twtich chat has a byte limit of 512 for messages sent
+    * Twitch chat has a byte limit of 512 for messages sent
 
 ---
 

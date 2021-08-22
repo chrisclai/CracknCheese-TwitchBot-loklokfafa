@@ -5,6 +5,8 @@ import requests
 import random
 import time
 from datetime import datetime
+
+from requests.models import StreamConsumedError
 import privinfo
 from _thread import *
 import threading
@@ -43,6 +45,15 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
     global secondplayerenter
     secondplayerenter = False
+
+    global player1
+    player1 = 0
+
+    global player2
+    player2 = 0
+
+    global matchaccept
+    matchaccept = False
 
     def __init__(self, username, client_id, token, channel):
         self.client_id = client_id
@@ -221,9 +232,12 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         global currentwordlocation
         global numguesses
 
-        # Just for 
+        # Just for Duelist game
         global firstplayerenter
         global secondplayerenter
+        global player1
+        global player2
+        global matchaccept
 
         # Poll the API to get current game.
         if cmd == "game":
@@ -355,13 +369,80 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                pass
 
         elif cmd == "duelist":
-            
-            
-            player1 = Duelist(e.source.nick)
-            player2 = Duelist(e.source.nick)
+            if not firstplayerenter:
+                player1 = Duelist(e.source.nick)
+                accounts = new_json()
+                if accounts[str(player1.location)]['points'] < 100:
+                    c.privmsg(self.channel, "Sorry, the required point total to play [Duelist] is 100 points. Please come back when you have the required points!")
+                else:
+                    firstplayerenter = True
+                    c.privmsg(self.channel, f"Hello {e.source.nick}, waiting for another person to play [Duelist]!")
+                    
+                    def querySecondPlayer(self, c, e):
+                        global firstplayerenter
+                        global secondplayerenter
+                        timecounter = 0
+                        while(True):
+                            if not secondplayerenter:
+                                c.privmsg(self.channel, f"[Duelist] {e.source.nick} is currently waiting for another person to play Duelist. Use !duelist to begin the match!")
+                                time.sleep(30)
+                                timecounter += 1
+                            elif timecounter == 6:
+                                firstplayerenter = True
+                                c.privmsg(self.channel, f"[Duelist] Timeout occured at 5 minutes. Please re-type !duelist to enter queue again!")
+                            else:
+                                break
+
+                    thread_query2 = threading.Thread(target = querySecondPlayer, args = (self, c, e))
+                    thread_query2.start()
+            elif not secondplayerenter:
+                player2 = Duelist(e.source.nick)
+                accounts = new_json()
+                if accounts[str(player1.location)]['points'] < 100:
+                    c.privmsg(self.channel, "Sorry, the required point total to play [Duelist] is 100 points. Please come back when you have the required points!")
+                else:
+                    secondplayerenter = True
+                    c.privmsg(self.channel, f"[Duelist] {e.source.nick} has entered the arena! Prepare for battle!")
+
+                    def matchTimeout(self, c):
+                        global firstplayerenter
+                        global secondplayerenter
+                        global player1
+                        global player2
+                        global matchaccept
+
+                        time.sleep(60)
+                        if not matchaccept:
+                            pass
+                        else:
+                            c.privmsg(self.channel, "[Duelist] Sorry, one of the players has not accepted the battle! (Use !accept). Queue has been reset to allow other players in. Thanks for participating!")
+                            firstplayerenter = False
+                            secondplayerenter = False
+                            player1 = 0
+                            player2 = 0
+                            matchaccept = False
+
+                    time.sleep(1)
+                    matchaccept = True
+                    c.privmsg(self.channel, f"[Duelist] {player1.username} and {player2.username}, please use !accept to start the game! You have 1 minute to do this before the system will reset!")
+
+                    thread_startgame = threading.Thread(target = matchTimeout, args = (self, c))
+                    thread_startgame.start()
+            else:
+                c.privmsg(self.channel, "[Duelist] A game has already started. Please wait for the current game to end before trying this command again!")
+
+
 
         elif cmd == "accept":
-            pass
+            if firstplayerenter and secondplayerenter:
+                pass
+            elif firstplayerenter:
+                c.privmsg(self.channel, "[Duelist] Sorry, this command won't work unless a second player joins!")
+            else:
+                c.privmsg(self.channel, "[Duelist] Sorry, that command does not work yet. Please use !duelist to start a game!")
+
+            
+                
 
         # If empty command is recieved
         elif not cmd:

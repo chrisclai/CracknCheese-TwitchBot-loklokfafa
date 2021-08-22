@@ -32,7 +32,7 @@
         "reward": 50
     },
     "4": {
-        "word": "partial derivative",
+        "word": "partial_derivative",
         "hint0": "used in three dimensional spaces",
         "hint1": "there's something not whole about this method",
         "hint2": "when dy/dx just won't cut it",

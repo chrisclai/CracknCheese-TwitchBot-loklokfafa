@@ -5,6 +5,9 @@ class Duelist:
         self.username = username
         self.points = 0
 
+        self.hasenter = False
+        self.hasaccept = False
+
         accounts = new_json()
         self.location = 0
         for x in range(len(accounts)):
@@ -14,4 +17,3 @@ class Duelist:
 
     def addPoint(self):
         self.points += 1
-
