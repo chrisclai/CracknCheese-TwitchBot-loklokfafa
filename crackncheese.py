@@ -47,13 +47,10 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     secondplayerenter = False
 
     global player1
-    player1 = 0
+    player1 = Duelist()
 
     global player2
-    player2 = 0
-
-    global matchaccept
-    matchaccept = False
+    player2 = Duelist()
 
     def __init__(self, username, client_id, token, channel):
         self.client_id = client_id
@@ -237,7 +234,6 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         global secondplayerenter
         global player1
         global player2
-        global matchaccept
 
         # Poll the API to get current game.
         if cmd == "game":
@@ -409,21 +405,29 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                         global secondplayerenter
                         global player1
                         global player2
-                        global matchaccept
 
-                        time.sleep(60)
-                        if not matchaccept:
-                            pass
-                        else:
-                            c.privmsg(self.channel, "[Duelist] Sorry, one of the players has not accepted the battle! (Use !accept). Queue has been reset to allow other players in. Thanks for participating!")
-                            firstplayerenter = False
-                            secondplayerenter = False
-                            player1 = 0
-                            player2 = 0
-                            matchaccept = False
+                        timecounter = 0
+
+                        while True:
+                            time.sleep(1)
+                            timecounter += 1
+                            if player1.hasaccept == True and player2.hasaccept == True:
+                                playDuelist(self, c, player1, player2)
+                                firstplayerenter = False
+                                secondplayerenter = False
+                                player1 = Duelist()
+                                player2 = Duelist()
+                                break
+                                
+                            elif timecounter > 60:
+                                c.privmsg(self.channel, "[Duelist] Sorry, one of the players has not accepted the battle! (Use !accept). Queue has been reset to allow other players in. Thanks for participating!")
+                                firstplayerenter = False
+                                secondplayerenter = False
+                                player1 = Duelist()
+                                player2 = Duelist()
+                                break
 
                     time.sleep(1)
-                    matchaccept = True
                     c.privmsg(self.channel, f"[Duelist] {player1.username} and {player2.username}, please use !accept to start the game! You have 1 minute to do this before the system will reset!")
 
                     thread_startgame = threading.Thread(target = matchTimeout, args = (self, c))
@@ -431,18 +435,22 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             else:
                 c.privmsg(self.channel, "[Duelist] A game has already started. Please wait for the current game to end before trying this command again!")
 
-
-
         elif cmd == "accept":
+            global player1
+            global player2
             if firstplayerenter and secondplayerenter:
-                pass
+                if e.source.nick == player1.username:
+                    player1.hasaccept = True
+                    c.privmsg(self.channel, f"[Duelist] {e.source.nick} is ready for battle!")
+                elif e.source.nick == player2.username:
+                    player2.hasaccept = True
+                    c.privmsg(self.channel, f"[Duelist] {e.source.nick} is ready for battle!")
+                else:
+                    c.privmsg(self.channel, "[Duelist] Sorry, an ongoing game is occuring right now. Please wait until the current game is finished before starting a new one!")
             elif firstplayerenter:
                 c.privmsg(self.channel, "[Duelist] Sorry, this command won't work unless a second player joins!")
             else:
                 c.privmsg(self.channel, "[Duelist] Sorry, that command does not work yet. Please use !duelist to start a game!")
-
-            
-                
 
         # If empty command is recieved
         elif not cmd:
