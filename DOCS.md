@@ -2,8 +2,15 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 23rd, 2021 (Day 15)
+- Continued development on the Duelist Gamemode
+    * Converted matchaccept global variable into class local variable
+    * Completed logic for playDuelist, up to minigame 2 with the two toggle varialbes to detect for speed mechanic
+
+---
+
 ### August 21th, 2021 (Day 14)
-- Continued develeopment on the Duelist Gamemode
+- Continued development on the Duelist Gamemode
     * Defined definitions and constructed game process from the flowchart up to !accept
     * Commands such as !duelist and !accept function properly (but not tested yet)
 - For tomorrow, move global variables such as firstplayerenter and secondplayerenter into Class as to not clog up file with too many global variables (Things can be referenced from the temp. account itself inside of class)
