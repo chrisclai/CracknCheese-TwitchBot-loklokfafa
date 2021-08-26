@@ -105,14 +105,26 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         c.join(self.channel)
 
     def on_pubmsg(self, c, e):
+        # Global player1 and player 2 variables for math game
+        global player1
+        global player2
+        
         # Update the Bong Bell (iterate by 1) when a message is sent by anyone
         msgup()
 
         # If a chat message starts with an exclamation point, try to run it as a command
-        if e.arguments[0][:1] == '!' and e.arguments[0][:10] != '!playsound':
-            cmd = e.arguments[0].split(' ')[0][1:]
-            print('Received command: ' + cmd)
-            self.do_command(e, cmd)
+        if e.arguments[0][:5] == '!math':
+            try:
+                ans = e.arguments[0].split(' ')[1]
+                if player1.min3start and player2.min3start:
+                    if e.source.nick == player1.username:
+                        player1.mathanswer = ans
+                    elif e.source.nick == player2.username:
+                        player2.mathanswer = ans
+                else:
+                    c.privmsg(self.channel, "[Duelist] This command cannot be used outside of battle. Use !duelist to begin a match!")
+            except:
+                c.privmsg(self.channel, "[Duelist] Please enter an answer!")
         elif e.arguments[0][:10] == '!playsound':
             try:
                 cmd = e.arguments[0].split(' ')[1]
@@ -120,6 +132,11 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 self.playsound(e, cmd)
             except:
                 c.privmsg(self.channel, "What would you like me to play?")
+        if e.arguments[0][:1] == '!':
+            cmd = e.arguments[0].split(' ')[0][1:]
+            print('Received command: ' + cmd)
+            self.do_command(e, cmd)
+            
 
         # Word charade game
         global wordactive
@@ -251,7 +268,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         # Provide the Discord Link
         elif cmd == "discord":
-            message = "No discord found! Stay tuned for more updates!"
+            message = "Join the Discord for more fun! [https://discord.gg/Teu3KF7sAk]"
             c.privmsg(self.channel, message)
 
         # Provide all the help commands

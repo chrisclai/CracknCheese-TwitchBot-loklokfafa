@@ -2,6 +2,24 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 25th, 2021 (Day 17)
+- Completed "Math" minigame and began dealing with game logistics and process
+    * Used eval() to solve math functions from a string python command
+    * Used 2 local variables inside of the constructor to compare values from main script and dependency **duelist.py**
+- Wordcharade spam in chat
+
+---
+
+### August 24th, 2021 (Day 16)
+- Completed "Speed" minigame by creating two local class variables that feed into the main script
+    * Success factor actuated using "!accept" which is part of do_command()
+- Began "Math" minigame by creating skeleton code for equation creation
+    * Created random amounts of numbers
+    * Created random operation chosen from +, -, *
+    * Stopped at turning string operators to real operators using operator library
+
+---
+
 ### August 23rd, 2021 (Day 15)
 - Continued development on the Duelist Gamemode
     * Converted matchaccept global variable into class local variable
