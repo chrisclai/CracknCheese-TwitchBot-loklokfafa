@@ -1,50 +1,50 @@
 {
     "0": {
-        "word": "spectrum",
-        "hint0": "inducing rage in 10 million consumers worldwide!",
-        "hint1": "it says high speed, but is it really?",
-        "hint2": "this won't be good if it goes out of service",
-        "hint3": "also used in EMR and other types of measurement systems",
+        "word": "black",
+        "hint0": "dark and gloomy, but sometimes not. A true paradox.",
+        "hint1": "some people find it stylish to place on their own selves",
+        "hint2": "a symbol of death",
+        "hint3": "a color like no other",
         "reward": 50
     },
 	"1": {
-        "word": "fifteen",
-        "hint0": "a number considered to be triple of perfect scores",
-        "hint1": "perfect on a scale of one to those that rhyme with live",
-        "hint2": "three more than one less of a baker's dozen",
-        "hint3": "not a prime number",
+        "word": "hippo",
+        "hint0": "what a strange guy",
+        "hint1": "they live in swamps rarely, but often for fear of capture",
+        "hint2": "many of them are large, you probably wouldn't be able to take them in a fight",
+        "hint3": "an animal of semi-large proportions",
         "reward": 50
     },
     "2": {
-        "word": "zero",
-        "hint0": "has a similar meaning to things that geese lay",
-        "hint1": "your mom won't be happy to see this grade",
-        "hint2": "only good in golf",
-        "hint3": "cannot be negative in an unsigned format",
+        "word": "light",
+        "hint0": "limes with white, symbolizes white, but is not white at its peak",
+        "hint1": "thy neighbors heed thy warning... idk I don't read the bible",
+        "hint2": "periodically, making a rainbow",
+        "hint3": "rhymes with white",
         "reward": 50
     },
     "3": {
-        "word": "ethernet",
-        "hint0": "a cable of fun, an apparent catalyst to none",
-        "hint1": "sold in bunches of 50 feet wide",
-        "hint2": "not sold already installed",
-        "hint3": "must have a router installed to use this device",
+        "word": "binary",
+        "hint0": "gender studies is popular these days, isn't it?",
+        "hint1": "they say there are two sexes, but multiple sexualities.",
+        "hint2": "ECE majors get off on this stuff",
+        "hint3": "01100010 01101001 01110100 01100011 01101000",
         "reward": 50
     },
     "4": {
-        "word": "partial_derivative",
-        "hint0": "used in three dimensional spaces",
-        "hint1": "there's something not whole about this method",
-        "hint2": "when dy/dx just won't cut it",
-        "hint3": "a change in a specific direction",
+        "word": "solution",
+        "hint0": "in differential equations, we must find a single homogenous and particular version",
+        "hint1": "a conclusion like no other",
+        "hint2": "the end of a process",
+        "hint3": "well I have a-",
         "reward": 100
     },
     "5": {
-        "word": "matrix",
-        "hint0": "reality can be whatever I want",
-        "hint1": "it is perfect when it is square",
-        "hint2": "used for transformations of the highest caliber",
-        "hint3": "the bane of linear algebra applications",
+        "word": "photosynthesis",
+        "hint0": "the sun shines down on the world tonight",
+        "hint1": "soaking up the energy through the ears of light",
+        "hint2": "green days awaken, later baked to perfection",
+        "hint3": "An essential process of plant growth. You can't get this wrong now.",
         "reward": 100
     }
 }

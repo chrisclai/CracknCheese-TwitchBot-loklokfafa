@@ -132,7 +132,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 self.playsound(e, cmd)
             except:
                 c.privmsg(self.channel, "What would you like me to play?")
-        if e.arguments[0][:1] == '!':
+        elif e.arguments[0][:1] == '!':
             cmd = e.arguments[0].split(' ')[0][1:]
             print('Received command: ' + cmd)
             self.do_command(e, cmd)
@@ -387,6 +387,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 accounts = new_json()
                 if accounts[str(player1.location)]['points'] < 100:
                     c.privmsg(self.channel, "Sorry, the required point total to play [Duelist] is 100 points. Please come back when you have the required points!")
+                    player1 = Duelist("")
                 else:
                     firstplayerenter = True
                     c.privmsg(self.channel, f"Hello {e.source.nick}, waiting for another person to play [Duelist]!")
@@ -396,9 +397,10 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                         global secondplayerenter
                         timecounter = 0
                         while(True):
+                            print(secondplayerenter)
                             if not secondplayerenter:
-                                c.privmsg(self.channel, f"[Duelist] {e.source.nick} is currently waiting for another person to play Duelist. Use !duelist to begin the match!")
                                 time.sleep(30)
+                                c.privmsg(self.channel, f"[Duelist] {e.source.nick} is currently waiting for another person to play Duelist. Use !duelist to begin the match!")
                                 timecounter += 1
                             elif timecounter == 6:
                                 firstplayerenter = True
@@ -413,6 +415,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 accounts = new_json()
                 if accounts[str(player1.location)]['points'] < 100:
                     c.privmsg(self.channel, "Sorry, the required point total to play [Duelist] is 100 points. Please come back when you have the required points!")
+                    player2 = Duelist("")
                 else:
                     secondplayerenter = True
                     c.privmsg(self.channel, f"[Duelist] {e.source.nick} has entered the arena! Prepare for battle!")

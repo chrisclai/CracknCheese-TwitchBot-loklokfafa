@@ -2,6 +2,13 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 26th, 2021 (Day 18)
+- Completed implementation of Duelist and tested it with multiple pairs
+- Fixed bugs including timeout bug, Math minigame, and tiebreaker
+- Points system working as normal
+
+---
+
 ### August 25th, 2021 (Day 17)
 - Completed "Math" minigame and began dealing with game logistics and process
     * Used eval() to solve math functions from a string python command
