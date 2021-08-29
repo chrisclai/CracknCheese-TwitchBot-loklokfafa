@@ -22,6 +22,8 @@ from tkleaderboard import *
 from groupreward import *
 from requestreward import checkreward
 from duelist import *
+from roll import *
+from finduser import *
 
 class TwitchBot(irc.bot.SingleServerIRCBot):
     # GLOBAL VARIABLES
@@ -268,7 +270,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         # Provide the Discord Link
         elif cmd == "discord":
-            message = "Join the Discord for more fun! [https://discord.gg/Teu3KF7sAk]"
+            message = "Join the Discord for more fun! https://discord.gg/Teu3KF7sAk"
             c.privmsg(self.channel, message)
 
         # Provide all the help commands
@@ -277,9 +279,14 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             
         # Roll command
         elif cmd == "roll":
-            randnum = random.randrange(0,100,1)
-            message = str(randnum)
-            c.privmsg(self.channel, message)
+            accounts = new_json()
+            userlocation = finduser(e, accounts)
+            
+            if accounts[str(userlocation)]['points'] > 100:
+                roll_thread = threading.Thread(target = rollgame, args=(self, c, e))
+                roll_thread.start()
+            else:
+                c.privmsg(self.channel, f"[🎲Risk Roll🎲] Sorry, you do not have enough points to play this game! Come back when you have at least 100 points. Thank you!")
 
         # lurk command
         elif cmd == "lurk":

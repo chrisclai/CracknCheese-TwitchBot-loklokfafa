@@ -2,6 +2,16 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 28th, 2021 (Day 19)
+- Updated the roll command
+    * Before it simply finds a random number between 1-100 and displays it to chat
+    * Now it spawns a number for both player and computer, if player is higher then will provide rewards
+- Rewards scaling (balancing)
+    * Make sure there is balanced gameplay, for roll command it provides +10xp for win and -10xp for loss
+    * Roll is a risky game, so winning or losing takes a percentage of your total amount and adds or removes it.
+
+---
+
 ### August 26th, 2021 (Day 18)
 - Completed implementation of Duelist and tested it with multiple pairs
 - Fixed bugs including timeout bug, Math minigame, and tiebreaker
