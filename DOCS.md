@@ -2,6 +2,13 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 29th, 2021 (Day 20)
+- Code Cleanup
+    * Removed redundancy in update_json.py
+    * Updated software dependencies and diagrams
+
+---
+
 ### August 28th, 2021 (Day 19)
 - Updated the roll command
     * Before it simply finds a random number between 1-100 and displays it to chat

@@ -29,7 +29,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
     # GLOBAL VARIABLES
     global accounts
     accounts = {}
-    accounts = refresh_json(accounts)
+    accounts = new_json()
 
     # For wordcharade game only!
     global wordactive
@@ -196,7 +196,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         # Award points to the chatter for interaction (also awards xp)
         print(f"System has given {e.source.nick} 1 point and 1 xp!")
-        accounts = refresh_json(accounts)
+        accounts = new_json()
         accountlen = len(accounts)
         awardee = e.source.nick
         exist = False
@@ -304,7 +304,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             location = 0
 
             print("Accounts Refreshed!")
-            accounts = refresh_json(accounts)
+            accounts = new_json()
             accountlen = len(accounts)
 
             for x in range(accountlen):
@@ -338,7 +338,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
 
         # Display Leaderboard
         elif cmd == "leaderboard":
-            accounts = refresh_json(accounts)
+            accounts = new_json()
             listnames, listxp = sortbyhigh(accounts)
             output = "XP Leaderboard"
             emojis = ["🏆", "🥇", "🥈", "🥉", "🏅", "🎖️", "🎖", "🔲"]
@@ -350,7 +350,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         elif cmd == "daily":
             exist = False
             location = 0
-            accounts = refresh_json(accounts)
+            accounts = new_json()
             for x in range (len(accounts)):
                 if e.source.nick == accounts[str(x)]['username']:
                     exist = True
