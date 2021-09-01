@@ -10,7 +10,7 @@ from requests.models import StreamConsumedError
 import privinfo
 from _thread import *
 import threading
-import tkinter as tk
+# import tkinter as tk
 from pygame import mixer
 
 # Individual File Dependencies
@@ -18,8 +18,8 @@ from update_json import *
 from checkrank import *
 from info import *
 from sortleaderboard import *
-from tkleaderboard import *
-from groupreward import *
+# from tkleaderboard import *
+# from groupreward import *
 from requestreward import checkreward
 from duelist import *
 from roll import *
@@ -94,8 +94,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         thread_automsg = threading.Thread(target = auto_msg, args = (self, c))
         thread_automsg.start()
 
-        thread_leaderboard = threading.Thread(target = tkleaderboard)
-        thread_leaderboard.start()
+        # thread_leaderboard = threading.Thread(target = tkleaderboard)
+        # thread_leaderboard.start()
 
         thread_checkbell = threading.Thread(target = check_bell, args = (self, c))
         thread_checkbell.start()
@@ -112,7 +112,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
         global player2
         
         # Update the Bong Bell (iterate by 1) when a message is sent by anyone
-        msgup()
+        # msgup()
 
         # If a chat message starts with an exclamation point, try to run it as a command
         if e.arguments[0][:5] == '!math':
@@ -129,9 +129,10 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 c.privmsg(self.channel, "[Duelist] Please enter an answer!")
         elif e.arguments[0][:10] == '!playsound':
             try:
-                cmd = e.arguments[0].split(' ')[1]
+                c.privmsg(self.channel, "Sorry, that command is currently unavailable. Please try another command!")
+                '''cmd = e.arguments[0].split(' ')[1]
                 print('Recieved command: ' + cmd)
-                self.playsound(e, cmd)
+                self.playsound(e, cmd)'''
             except:
                 c.privmsg(self.channel, "What would you like me to play?")
         elif e.arguments[0][:1] == '!':
@@ -501,8 +502,8 @@ def main():
     token     = privinfo.token
     channel   = "loklokfafa"
 
-    thread_groupreward = threading.Thread(target = groupreward)
-    thread_groupreward.start()
+    # thread_groupreward = threading.Thread(target = groupreward)
+    # thread_groupreward.start()
 
     bot = TwitchBot(username, client_id, token, channel)
     bot.start()

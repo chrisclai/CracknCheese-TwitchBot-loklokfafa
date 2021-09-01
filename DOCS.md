@@ -2,6 +2,14 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### August 31th, 2021 (Day 21)
+- Moved bot to Linode server using WinSCP for the time being
+- Disabled leaderboard settings and disabled bong bell due to tkinter not being supported
+- Disabled dependencies that were not functioning
+- Bot is able to run smoothly on the server while updating an internal JSON database
+
+---
+
 ### August 29th, 2021 (Day 20)
 - Code Cleanup
     * Removed redundancy in update_json.py
