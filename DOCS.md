@@ -2,6 +2,14 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### September 4th, 2021 (Day 23)
+- Imported discord bot code and connected it with account system on twitch
+- In order to use the account system, name your discord nickname to your twitch name IN LOWERCASE!
+- commands !account and !roll work 
+- Re-wrote the !roll command to account for synchronous action in discord.py
+
+---
+
 ### August 31th, 2021 (Day 21)
 - Moved bot to Linode server using WinSCP for the time being
 - Disabled leaderboard settings and disabled bong bell due to tkinter not being supported
