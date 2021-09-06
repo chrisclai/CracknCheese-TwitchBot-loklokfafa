@@ -2,6 +2,13 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### September 5th, 2021 (Day 24)
+- Added security system by linked discord username to twitch channel through !link
+- Updated the finduser command with an additional mode to track discord username as well as twitch username
+- Updated roll to include external condition for invalid state (no account)
+
+---
+
 ### September 4th, 2021 (Day 23)
 - Imported discord bot code and connected it with account system on twitch
 - In order to use the account system, name your discord nickname to your twitch name IN LOWERCASE!
