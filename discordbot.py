@@ -17,6 +17,7 @@ from _thread import *
 # File Dependencies
 import privinfo
 from update_json import *
+from sortleaderboard import *
 
 # Initalize bot information
 client = commands.Bot(command_prefix='!')
@@ -124,8 +125,18 @@ async def link(ctx):
                 await ctx.channel.send(f"Username Found. Your Discord and Twitch accounts have been successfully linked. Welcome back {accounts[str(location)]['username']}!")
                 accounts[str(location)]['discordname'] = ctx.author.name
                 update_json('accounts/accounts.json', accounts)
-        else:
-            await ctx.channel.send(f"Welcome back, {ctx.author.nick}! Your account is already linked to your Twitch account, {accounts[str(location)]['username']}. Have a great day!")
+    else:
+        await ctx.channel.send(f"Welcome back, {ctx.author.name}! Your account is already linked to your Twitch account, {accounts[str(location)]['username']}. Have a great day!")
+
+@client.command(pass_context=True)
+async def leaderboard(ctx):
+    accounts = new_json()
+    listnames, listxp = sortbyhigh(accounts)
+    output = "__XP Leaderboard__\n"
+    emojis = ["🔥", "🥇", "🥈", "🥉", "🏅", "🎖️", "🎖", "🔲"]
+    for x in range(0, 8):
+        output += f"> {emojis[x]}: [{listnames[x]}, {listxp[x]} xp]\n"
+    await ctx.channel.send(output)
 
 @client.command(pass_context=True)
 async def roll(ctx):

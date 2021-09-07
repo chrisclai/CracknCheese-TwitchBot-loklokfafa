@@ -1,5 +1,6 @@
 from hashlib import new
 from logging import exception
+import discord
 import irc.bot
 import requests
 import random
@@ -486,6 +487,18 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                     player2.winmin2 = True
             else:
                 c.privmsg(self.channel, "[Duelist] Sorry, that command does not work but is part of the Duelist game. Use !duelist to begin a new game!")
+        
+        # Only for karrwash
+        elif cmd == "link":
+            accounts = new_json()
+            location = finduser(e, accounts)
+            discordname = accounts[str(location)]['discordname']
+
+            # If no discord username detected
+            if not discordname:
+                c.privmsg(self.channel, "[Discord] Sorry, you do not have your Twitch account linked with the loklokfafa Discord yet. Please join the discord, use !link, and try again!")
+            else:
+                c.privmsg(self.channel, f"[Discord] Welcome back from discord, {discordname}! Enjoy the stream!")
 
         # If empty command is recieved
         elif not cmd:

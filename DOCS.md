@@ -2,6 +2,15 @@
 
 This markdown file contains daily updates on progress that is made during a livestream. The corresponding label relates to the stream that the progress came from. Series title: Day ### of coding twitch chat perks until I get affiliate (or until I get a chat)
 
+### September 6th, 2021 (Day 25)
+- Fixed a few bugs
+    * !link not functioning because the conditional was placed in a wrong indentaiton
+- Implemented a function to see the discord username from stream chat on twitch (!link)
+- Tested !duelist (Found bugs!!!) After 1 game has finished, the next one can't begin [Fix later]
+- Wrote a markdown script for the xp leaderboard and used **sortleaderboard.py** dependency to display the live leaderboard on discord using the !leaderboard command.
+
+---
+
 ### September 5th, 2021 (Day 24)
 - Added security system by linked discord username to twitch channel through !link
 - Updated the finduser command with an additional mode to track discord username as well as twitch username
