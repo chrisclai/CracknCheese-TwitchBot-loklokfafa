@@ -130,12 +130,11 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 c.privmsg(self.channel, "[Duelist] Please enter an answer!")
         elif e.arguments[0][:10] == '!playsound':
             try:
-                c.privmsg(self.channel, "Sorry, that command is currently unavailable. Please try another command!")
-                '''cmd = e.arguments[0].split(' ')[1]
+                cmd = e.arguments[0].split(' ')[1]
                 print('Recieved command: ' + cmd)
-                self.playsound(e, cmd)'''
+                self.playsound(e, cmd)
             except:
-                c.privmsg(self.channel, "What would you like me to play?")
+                c.privmsg(self.channel, "BONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONGBONG")
         elif e.arguments[0][:1] == '!':
             cmd = e.arguments[0].split(' ')[0][1:]
             print('Received command: ' + cmd)
@@ -212,7 +211,8 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
                 exist = True
                 break
         if not exist:
-            c.privmsg(self.channel, "You did not recieve xp for this message! Please use !account to save your progress, earn xp, and gain points!")
+            pass
+            # c.privmsg(self.channel, "You did not recieve xp for this message! Please use !account to save your progress, earn xp, and gain points!")
 
     def playsound(self, e, cmd):
         global accounts
@@ -231,6 +231,7 @@ class TwitchBot(irc.bot.SingleServerIRCBot):
             if cmd == 'bong':
                 accounts[str(location)]['points'] -= 50
                 update_json('accounts/accounts.json', accounts)
+                
                 mixer.music.load('sounds/bong.mp3')
                 c.privmsg(self.channel, f"Hey {e.source.nick}, you ran the command !playsound bong, which costs 50 points. You now have {accounts[str(location)]['points']} points remaining!")
             else:
